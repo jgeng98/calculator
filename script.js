@@ -37,11 +37,22 @@ function addNumToScreen(number) {
 
 function addOperationToScreen(operation) {}
 
-function addDecimal() {}
+function addDecimal() {
+  // if there's already a decimal point in the current expression, don't do anything
+  if (currentExpression.textContent.includes(".")) {
+    return;
+  }
+
+  // otherwise, append a decimal point to the current expression
+  currentExpression.textContent += ".";
+}
 
 function evaluateExpression() {}
 
-function undoCharacter() {}
+function undoCharacter() {
+  // removes the last character from the current expression
+  currentExpression.textContent = currentExpression.textContent.slice(0, -1);
+}
 
 function clearScreen() {
   pastExpression.textContent = "";
