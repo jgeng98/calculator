@@ -72,8 +72,8 @@ body {
 
 .number,
 .operation,
-.decimal,
-.equals {
+#decimal,
+#equals {
   aspect-ratio: 1;
 }
 
