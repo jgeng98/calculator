@@ -93,21 +93,21 @@ body {
 }
 
 .number,
-.operation,
+.operator,
 #decimal,
 #equals {
   aspect-ratio: 1;
 }
 
 .number:hover,
-.operation:hover,
+.operator:hover,
 #decimal:hover,
 #equals:hover {
   background-color: #8bd3d7;
 }
 
 .number:active,
-.operation:active,
+.operator:active,
 #decimal:active,
 #equals:active {
   background-color: #339096;
