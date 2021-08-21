@@ -64,8 +64,26 @@ body {
   background-color: #ecd5e3;
 }
 
+#clear:hover {
+  background-color: #dcb2cc;
+}
+
+#clear:active {
+  background-color: #c47da9;
+  color: white;
+}
+
 #backspace {
   background-color: #c1b3d7;
+}
+
+#backspace:hover {
+  background-color: #a692c5;
+}
+
+#backspace:active {
+  background-color: #7d60ab;
+  color: white;
 }
 
 #buttons {
@@ -81,11 +99,26 @@ body {
   aspect-ratio: 1;
 }
 
+.number:hover,
+.operation:hover,
+#decimal:hover,
+#equals:hover {
+  background-color: #8bd3d7;
+}
+
+.number:active,
+.operation:active,
+#decimal:active,
+#equals:active {
+  background-color: #339096;
+  color: white;
+}
+
 button {
   font-size: 1.8em;
   border: 2px solid rgba(0, 0, 0, 0.75);
   border-radius: 20px;
-  background-color: #a4d5d8;
+  background-color: #cccccc;
 }
 
 #footer {

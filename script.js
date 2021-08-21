@@ -52,6 +52,10 @@ function evaluateExpression() {}
 function undoCharacter() {
   // removes the last character from the current expression
   currentExpression.textContent = currentExpression.textContent.slice(0, -1);
+
+  if (currentExpression.textContent === "") {
+    currentExpression.textContent = 0;
+  }
 }
 
 function clearScreen() {
