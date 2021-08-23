@@ -96,8 +96,13 @@ function addDecimal() {
     return;
   }
 
+  // if the current expression screen contains an underscore, replace it with a zero
   // otherwise, append a decimal point to the current expression
-  currentExpression.textContent += ".";
+  if (currentExpression.textContent.includes("_")) {
+    currentExpression.textContent = "0.";
+  } else {
+    currentExpression.textContent += ".";
+  }
 }
 
 function evaluateExpression(firstOperand, operator, secondOperand) {
@@ -136,20 +141,35 @@ function evaluate() {
 }
 
 function clickEvaluate() {
+  // if past expression screen contains an "=", then an expression was recently evaluated, so do nothing
+  if (pastExpression.textContent.includes("=")) {
+    return;
+  }
+
+  // if there's currently an "_" in the current expression screen, then do nothing because there aren't enough operands
   if (currentExpression.textContent === "_") {
     return;
   }
 
+  // append the last clicked number to the past expression screen and an equals sign
   pastExpression.textContent += " " + currentExpression.textContent + " = ";
 
+  // split the string in the past expression screen to determine the operands and the operator
   let [operand1, operator, operand2] = pastExpression.textContent.split(" ");
 
+  // evaluate the expression and display the result on the screen
   currentExpression.textContent = roundResult(
     evaluateExpression(operand1, operator, operand2)
   );
 }
 
 function undoCharacter() {
+  // if past expression screen contains an "=", then an expression was just evaluated so clear the screen
+  if (pastExpression.textContent.includes("=")) {
+    clearScreen();
+    return;
+  }
+
   // removes the last character from the current expression
   currentExpression.textContent = currentExpression.textContent.slice(0, -1);
 
