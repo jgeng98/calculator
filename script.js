@@ -10,7 +10,7 @@ const pastExpression = document.querySelector("#past-expression");
 
 // starting values
 let currentOperator;
-let lastOperand;
+let firstOperand;
 
 // event listeners
 numberButtons.forEach((number) => {
@@ -60,23 +60,20 @@ function addNumToScreen(number) {
 
 function addOperatorToScreen(operator) {
   // remember the last operand that was clicked
-  lastOperand = currentExpression.textContent;
-
-  // if no number has been inputted yet, return nothing
-  if (currentExpression.textContent === "0") {
-    return;
-  }
+  firstOperand = currentExpression.textContent;
 
   //   if there is a current operator and the last operand was actually a number, then we can evaluate the expression
-  if (currentOperator !== null && lastOperand !== "_") {
+  if (currentOperator && firstOperand !== "_") {
     evaluate();
+    pastExpression.textContent = currentExpression.textContent + " " + operator;
+    currentExpression.textContent = "_";
   }
 
   // if the past expression screen is currently empty, that means it's the first operator in the expression
   // otherwise, it's a change in operator, so replace the previous operator with the newly clicked operator
   if (pastExpression.textContent === "") {
     // move the past operand and the operation to the previous expression screen
-    pastExpression.textContent = currentExpression.textContent + operator;
+    pastExpression.textContent = currentExpression.textContent + " " + operator;
     // display an "_" in the current expression screen to indicate an unfinished expression
     currentExpression.textContent = "" + "_";
   } else {
@@ -84,8 +81,8 @@ function addOperatorToScreen(operator) {
       pastExpression.textContent.slice(0, -1) + operator;
   }
 
-  // set the current operator variable
-  currentOperator = operator;
+  // set the current operator flag to be true
+  currentOperator = true;
 }
 
 function addDecimal() {
@@ -98,9 +95,35 @@ function addDecimal() {
   currentExpression.textContent += ".";
 }
 
-function evaluateExpression() {}
+function evaluateExpression(firstOperand, operator, secondOperand) {
+  switch (operator) {
+    case "÷":
+      return divide(firstOperand, secondOperand);
+    case "×":
+      return multiply(firstOperand, secondOperand);
+    case "+":
+      return add(firstOperand, secondOperand);
+    case "−":
+      return subtract(firstOperand, secondOperand);
+  }
+}
 
-function evaluate() {}
+function evaluate() {
+  // throw an alert if the user tries dividing by zero
+  if (currentOperator === "÷" && currentExpression.textContent === "0") {
+    alert("Uh oh, you tried dividing by zero! That's not allowed.");
+  }
+
+  pastExpression.textContent += " " + currentExpression.textContent;
+
+  let [operand1, operator, operand2] = pastExpression.textContent.split(" ");
+
+  currentExpression.textContent = roundResult(
+    evaluateExpression(operand1, operator, operand2)
+  );
+
+  currentOperator = false;
+}
 
 function undoCharacter() {
   // removes the last character from the current expression
@@ -122,17 +145,17 @@ function roundResult(num) {
 }
 
 function add(a, b) {
-  return a + b;
+  return +a + +b;
 }
 
 function subtract(a, b) {
-  return a - b;
+  return +a - +b;
 }
 
 function multiply(a, b) {
-  return a * b;
+  return +a * +b;
 }
 
 function divide(a, b) {
-  return a / b;
+  return +a / +b;
 }
