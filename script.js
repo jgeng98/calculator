@@ -77,8 +77,16 @@ function addOperatorToScreen(operator) {
   // if the past expression screen is currently empty, that means it's the first operator in the expression
   // otherwise, it's a change in operator, so replace the previous operator with the newly clicked operator
   if (pastExpression.textContent === "") {
-    // move the past operand and the operation to the previous expression screen
-    pastExpression.textContent = currentExpression.textContent + " " + operator;
+    if (currentExpression.textContent.length >= 15) {
+      currentOperand = +currentExpression.textContent;
+      pastExpression.textContent =
+        currentOperand.toExponential() + " " + operator;
+    } else {
+      // move the past operand and the operation to the previous expression screen
+      pastExpression.textContent =
+        currentExpression.textContent + " " + operator;
+    }
+
     // display an "_" in the current expression screen to indicate an unfinished expression
     currentExpression.textContent = "" + "_";
   } else {
@@ -156,6 +164,11 @@ function clickEvaluate() {
     return;
   }
 
+  // if there is nothing displayed in the past expression screen, then do nothing because a complete expression hasn't been inputted
+  if (pastExpression.textContent === "") {
+    return;
+  }
+
   // append the last clicked number to the past expression screen and an equals sign
   pastExpression.textContent += " " + currentExpression.textContent + " = ";
 
@@ -195,7 +208,7 @@ function clearScreen() {
 
 // calculator functions
 function roundResult(num) {
-  return Math.round(num * 100) / 100;
+  return Math.round(num * 1000) / 1000;
 }
 
 function add(a, b) {

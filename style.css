@@ -30,7 +30,7 @@ body {
 }
 
 #screen {
-  height: 15vh;
+  min-height: 15vh;
   background-color: white;
   margin-bottom: 30px;
   border: 2px solid rgba(0, 0, 0, 0.75);
@@ -42,16 +42,20 @@ body {
   text-align: end;
   font-size: 10px;
   font-size: 3.5vh;
-  padding: 2vh 2vw 0px 0px;
-  height: 6vh;
+  padding: 2vh 2vw 2vh 2vw;
+  width: 100%;
+  min-height: 6vh;
+  word-wrap: break-word;
 }
 
 #current-expression {
   text-align: end;
   font-size: 20px;
   font-size: 4.5vh;
-  padding: 1.5vh 2vw 0px 0px;
-  height: 6vh;
+  padding: 1.5vh 2vw 1.5vh 2vw;
+  width: 100%;
+  min-height: 6vh;
+  word-wrap: break-word;
 }
 
 .large-button {
