@@ -96,6 +96,7 @@ function addDecimal() {
 }
 
 function evaluateExpression(firstOperand, operator, secondOperand) {
+  // call the correct function depending on the operator
   switch (operator) {
     case "÷":
       return divide(firstOperand, secondOperand);
@@ -114,14 +115,18 @@ function evaluate() {
     alert("Uh oh, you tried dividing by zero! That's not allowed.");
   }
 
+  // appends the last clicked number (operand) to the past expression screen
   pastExpression.textContent += " " + currentExpression.textContent;
 
+  // split the string in the past expression screen to determine the operands and the operator
   let [operand1, operator, operand2] = pastExpression.textContent.split(" ");
 
+  // evaluate the expression and display the result on the current expression screen
   currentExpression.textContent = roundResult(
     evaluateExpression(operand1, operator, operand2)
   );
 
+  // set the current operator flag to be false
   currentOperator = false;
 }
 
@@ -135,6 +140,7 @@ function undoCharacter() {
 }
 
 function clearScreen() {
+  // resets the past and current expression screens
   pastExpression.textContent = "";
   currentExpression.textContent = "0";
 }
