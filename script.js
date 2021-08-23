@@ -96,6 +96,11 @@ function addDecimal() {
     return;
   }
 
+  // if the past expression screen contains an equals sign, clear the screen
+  if (pastExpression.textContent.includes("=")) {
+    clearScreen();
+  }
+
   // if the current expression screen contains an underscore, replace it with a zero
   // otherwise, append a decimal point to the current expression
   if (currentExpression.textContent.includes("_")) {
