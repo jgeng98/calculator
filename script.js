@@ -26,7 +26,7 @@ operatorButtons.forEach((operator) => {
 clearButton.addEventListener("click", clearScreen);
 backspaceButton.addEventListener("click", undoCharacter);
 decimalButton.addEventListener("click", addDecimal);
-equalsButton.addEventListener("click", evaluate);
+equalsButton.addEventListener("click", clickEvaluate);
 
 // calculator functionality
 function getOperator(operatorID) {
@@ -50,9 +50,14 @@ function addNumToScreen(number) {
   }
 
   // if current expression screen contains an "_" (ie. is an un unfinished expression), remove underscore and append number
+  // otherwise, if past expression screen contains an "=", then an expression was just calculated, so clear the screen before appending numbers
   // otherwise, continue appending numbers as usual
   if (currentExpression.textContent.includes("_")) {
     currentExpression.textContent = "" + number;
+  } else if (pastExpression.textContent.includes("=")) {
+    clearScreen();
+    currentExpression.textContent = "";
+    currentExpression.textContent += number;
   } else {
     currentExpression.textContent += number;
   }
@@ -130,6 +135,20 @@ function evaluate() {
   currentOperator = false;
 }
 
+function clickEvaluate() {
+  if (currentExpression.textContent === "_") {
+    return;
+  }
+
+  pastExpression.textContent += " " + currentExpression.textContent + " = ";
+
+  let [operand1, operator, operand2] = pastExpression.textContent.split(" ");
+
+  currentExpression.textContent = roundResult(
+    evaluateExpression(operand1, operator, operand2)
+  );
+}
+
 function undoCharacter() {
   // removes the last character from the current expression
   currentExpression.textContent = currentExpression.textContent.slice(0, -1);
@@ -143,6 +162,10 @@ function clearScreen() {
   // resets the past and current expression screens
   pastExpression.textContent = "";
   currentExpression.textContent = "0";
+
+  // reset the global variables
+  firstOperand = "";
+  currentOperator = false;
 }
 
 // calculator functions
