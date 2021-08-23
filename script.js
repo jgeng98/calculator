@@ -28,18 +28,42 @@ backspaceButton.addEventListener("click", undoCharacter);
 decimalButton.addEventListener("click", addDecimal);
 equalsButton.addEventListener("click", clickEvaluate);
 
+// add keyboard support
+document.addEventListener("keydown", (event) => {
+  // calls the correct function depending on the key pressed
+  // if an unsupported key is pressed (eg. "j"), do nothing
+  if (+event.key >= 0 || +event.key <= 9) {
+    addNumToScreen(event.key);
+  } else if (event.key === ".") {
+    addDecimal();
+  } else if (
+    event.key === "/" ||
+    event.key === "*" ||
+    event.key === "+" ||
+    event.key === "-"
+  ) {
+    operator = getOperator(event.key);
+    addOperatorToScreen(operator);
+  } else if (event.key === "Enter") {
+    clickEvaluate();
+  } else if (event.key === "Backspace") {
+    undoCharacter();
+  } else if (event.key === "Escape") {
+    clearScreen();
+  }
+});
+
 // calculator functionality
 function getOperator(operatorID) {
-  // returns the correct operator symbol
-  switch (operatorID) {
-    case "divide":
-      return "÷";
-    case "times":
-      return "×";
-    case "minus":
-      return "−";
-    case "plus":
-      return "+";
+  // returns the correct operator symbol, given either a button id (for clicking) or a keyboard button (for typing)
+  if (operatorID === "divide" || operatorID === "/") {
+    return "÷";
+  } else if (operatorID === "times" || operatorID === "*") {
+    return "×";
+  } else if (operatorID === "minus" || operatorID === "-") {
+    return "−";
+  } else if (operatorID === "plus" || operatorID === "+") {
+    return "+";
   }
 }
 
